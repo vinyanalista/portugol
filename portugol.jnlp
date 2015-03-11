@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="https://vinyanalista.github.io/portugol/" href="portugol.jnlp">
+    <information>
+        <title>Portugol Online</title>
+        <vendor>Antônio Vinícius Menezes Medeiros</vendor>
+        <offline-allowed />
+    </information>
+    <resources>
+        <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se" />
+        <jar href="portugol.jar" main="true" />
+    </resources>
+    <application-desc main-class="br.com.vinyanalista.portugol.ide.Aplicativo" name="Portugol Online" width="700" height="480">
+    </application-desc>
+    <update check="background" />
+</jnlp>
