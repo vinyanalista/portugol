@@ -1,0 +1,600 @@
+/*
+Disciplina : TCC
+Professor  : Michel Soares
+Aluno      : Antônio Vinícius Menezes Medeiros
+Descrição  : arquivo de definição da linguagem Portugol
+*/
+
+Package br.com.vinyanalista.portugol.base;
+
+Helpers
+    // Linguagem insensível à capitalização
+    a = 'A' | 'a' ;
+    b = 'B' | 'b' ;
+    c = 'C' | 'c' ;
+    d = 'D' | 'd' ;
+    e = 'E' | 'e' ;
+    f = 'F' | 'f' ;
+    g = 'G' | 'g' ;
+    h = 'H' | 'h' ;
+    i = 'I' | 'i' ;
+    j = 'J' | 'j' ;
+    k = 'K' | 'k' ;
+    l = 'L' | 'l' ;
+    m = 'M' | 'm' ;
+    n = 'N' | 'n' ;
+    o = 'O' | 'o' ;
+    p = 'P' | 'p' ;
+    q = 'Q' | 'q' ;
+    r = 'R' | 'r' ;
+    s = 'S' | 's' ;
+    t = 'T' | 't' ;
+    u = 'U' | 'u' ;
+    v = 'V' | 'v' ;
+    w = 'W' | 'w' ;
+    x = 'X' | 'x' ;
+    y = 'Y' | 'y' ;
+    z = 'Z' | 'z' ;
+
+    // Dígitos e letras
+    digito                = ['0' .. '9'] ;
+    letra                 = [['a' .. 'z'] + ['A' .. 'Z']] ;
+    qualquer_caractere    = [0 .. 0xffff];
+
+    // Caracteres permitidos nas cadeias, contém caracteres especiais e acentuação
+    // Referência: http://unicode-table.com
+    caracteres_permitidos_nas_cadeias = [32 .. 33] | [35 .. 126] | [0x00a0 .. 0xffff];
+
+    // Símbolos
+    abre_colchete      = '[' ;
+    abre_parentese     = '(' ;
+    aspa_dupla         = '"' ;
+    asterisco          = '*' ;
+    barra              = '/' ;
+    circunflexo        = '^' ;
+    fecha_colchete     = ']' ;
+    fecha_parentese    = ')' ;
+    hifen              = '-' ;
+    igual              = '=' ;
+    mais               = '+' ;
+    menos              = '-' ;
+    ponto              = '.' ;
+    sublinhado         = '_' ;
+    virgula            = ',' ;
+
+    // Caracteres não imprimíveis
+    cr  = 13 ; // carriage return (\r)
+    lf  = 10 ; // line feed (\n)
+    fim_de_linha
+        = lf // UNIX
+        | (cr lf) // DOS
+        | cr  // MAC
+        ;
+    // Referência: http://blog.glauco.mp/os-formatos-de-arquivos-unix-dos-e-mac-e-como-converte-los/
+    espaco       = ' ' ;
+    tabulacao    = 9 ;
+
+Tokens
+    /////////////////////////
+    // Palavras reservadas //
+    /////////////////////////
+
+    // 3.1 Estrutura sequencial em algoritmos
+    palavra_reservada_algoritmo        = a l g o r i t m o ;
+    palavra_reservada_declare          = d e c l a r e ;
+    palavra_reservada_fim_algoritmo    = f i m sublinhado a l g o r i t m o ;
+
+    // 3.1.1 Declaração de variáveis em algoritmos
+    palavra_reservada_numerico  = n u m e r i c o ;
+    palavra_reservada_literal   = l i t e r a l ;
+    palavra_reservada_logico    = l o g i c o ;
+
+    // 3.1.3 Comando de entrada em algoritmos
+    palavra_reservada_leia = l e i a ;
+
+    // 3.1.4 Comando de saída em algoritmos
+    palavra_reservada_escreva = e s c r e v a ;
+
+    // 4.1.1 Estrutura condicional simples
+    palavra_reservada_se        = s e ;
+    palavra_reservada_entao     = e n t a o ;
+    palavra_reservada_inicio    = i n i c i o ;
+    palavra_reservada_fim       = f i m ;
+
+    // 4.1.2 Estrutura condicional composta
+    palavra_reservada_senao = s e n a o ;
+
+    // 5.1.1 Estrutura de repetição para número definido de repetições (estrutura PARA)
+    palavra_reservada_para     = p a r a ;
+    palavra_reservada_ate      = a t e ;
+    palavra_reservada_faca     = f a c a ;
+    palavra_reservada_passo    = p a s s o ;
+
+    // 5.1.2 Estrutura de repetição para número indefinido de repetições e teste no início (estrutura ENQUANTO)
+    palavra_reservada_enquanto = e n q u a n t o ;
+
+    // 5.1.3 Estrutura de repetição para número indefinido de repetições e teste no final (estrutura REPITA)
+    palavra_reservada_repita = r e p i t a ;
+
+    // 8.1 Sub-rotinas (programação modularizada)
+    palavra_reservada_sub_rotina        = s u b hifen r o t i n a ;
+    palavra_reservada_retorne           = r e t o r n e ;
+    palavra_reservada_fim_sub_rotina    = f i m sublinhado s u b sublinhado r o t i n a ;
+
+    // 10.2 Declaração de registros em algoritmos
+    palavra_reservada_registro = r e g i s t r o ;
+
+    /////////////
+    // Valores //
+    /////////////
+
+    // 1.6.1 Numérico
+    numero_inteiro    = (mais | menos |) (digito)+ ;
+    numero_real       = (mais | menos |) (digito)+ ponto (digito)+ ;
+
+    // 1.6.2 Lógico
+    valor_logico = v e r d a d e i r o | f a l s o ;
+
+    // 1.6.3 Literal ou caractere
+    cadeia_de_caracteres = aspa_dupla caracteres_permitidos_nas_cadeias* aspa_dupla ;
+
+    ////////////////
+    // Operadores //
+    ////////////////
+
+    // 3.1.2 Comando de atribuição em algoritmos
+    operador_atribuicao = '<-' ;
+
+    // Aritméticos
+    operador_mais            = mais ;
+    operador_menos           = menos ;
+    operador_vezes           = asterisco ;
+    operador_dividido_por    = barra ;
+
+    // Lógicos
+    operador_e                 = e ;
+    operador_igual             = igual ;
+    operador_diferente         = '<>' ;
+    operador_maior_ou_igual    = '>=' ;
+    operador_maior             = '>' ;
+    operador_menor_ou_igual    = '<=' ;
+    operador_menor             = '<' ;
+    operador_nao               = n a o ;
+    operador_ou                = o u ;
+
+    /////////////////////
+    // Identificadores //
+    /////////////////////
+
+    // 1.7 Formação de identificadores
+    identificador = (letra | sublinhado)(digito | letra | sublinhado)* ;
+
+    /////////////////////////////
+    // Separadores de símbolos //
+    /////////////////////////////
+
+    abre_colchete      = abre_colchete ;
+    abre_parentese     = abre_parentese ;
+    fecha_colchete     = fecha_colchete ;
+    fecha_parentese    = fecha_parentese ;
+    ponto              = ponto ;
+    virgula            = virgula ;
+
+    ///////////////////////
+    // Espaços em branco //
+    ///////////////////////
+
+    espaco_em_branco    = (espaco | tabulacao | fim_de_linha)* ;
+    comentario          = barra barra [qualquer_caractere - [cr + lf]]*;
+
+Ignored Tokens
+    espaco_em_branco, comentario;
+
+Productions
+    // 3.1 Estrutura sequencial em algoritmos
+    algoritmo // Lado esquerdo da produção
+    {-> algoritmo} // Equivalente na árvore sintática abstrata
+    
+        = palavra_reservada_algoritmo lista_de_declaracoes? comando* palavra_reservada_fim_algoritmo ponto? sub_rotina* // Lado direito da produção
+        {-> New algoritmo([lista_de_declaracoes.declaracao], [comando], [sub_rotina])} // Equivalente na árvore sintática abstrata
+        ;
+
+    // 3.1.1 Declaração de variáveis em algoritmos
+    lista_de_declaracoes
+    {-> declaracao*}
+    
+        = palavra_reservada_declare declaracao+
+        {-> [declaracao]}
+        ;
+
+    declaracao
+    {-> declaracao}
+    
+        = lista_de_variaveis tipo
+        {-> New declaracao([lista_de_variaveis.variavel], tipo)}
+        ;
+
+    lista_de_variaveis
+    {-> variavel*}
+    
+        = variavel continuacao_da_lista_de_variaveis*
+        {-> [variavel, continuacao_da_lista_de_variaveis.variavel]}
+        ;
+
+    continuacao_da_lista_de_variaveis
+    {-> variavel}
+    
+        = virgula variavel
+        {-> variavel}
+        ;
+
+    variavel
+    {-> variavel}
+    
+        = {simples} identificador
+        {-> New variavel.simples(identificador)}
+        
+        | {vetor_ou_matriz} identificador abre_colchete lista_de_expressoes fecha_colchete
+        {-> New variavel.vetor_ou_matriz(identificador, [lista_de_expressoes.expressao])}
+        ;
+
+    // 1.6 Tipos de dados
+    tipo
+    {-> tipo}
+
+        = {numerico} palavra_reservada_numerico
+        {-> New tipo.numerico()}
+
+        | {literal} palavra_reservada_literal
+        {-> New tipo.literal()}
+
+        | {logico} palavra_reservada_logico
+        {-> New tipo.logico()}
+
+        // 10.2 Declaração de registros em algoritmos
+        | {registro} palavra_reservada_registro abre_parentese lista_de_campos fecha_parentese
+        {-> New tipo.registro([lista_de_campos.declaracao])}
+        ;
+
+    lista_de_campos
+    {-> declaracao*}
+
+        = declaracao+
+        {-> [declaracao]}
+        ;
+
+    comando
+    {-> comando}
+
+        = {aberto} comando_aberto
+        {-> comando_aberto.comando}
+
+        | {fechado} comando_fechado
+        {-> comando_fechado.comando}
+        ;
+
+    comando_aberto
+    {-> comando}
+
+        // 4.1.1 Estrutura condicional simples
+        = {condicional_simples} palavra_reservada_se expressao palavra_reservada_entao comando
+        {-> New comando.condicional(expressao, comando, Null)}
+
+        // 4.1.2 Estrutura condicional composta
+        | {condicional_composta} palavra_reservada_se expressao palavra_reservada_entao comando_fechado palavra_reservada_senao comando_aberto
+        {-> New comando.condicional(expressao, comando_fechado.comando, comando_aberto.comando)}
+        ;
+
+    comando_fechado
+    {-> comando}
+
+        // 3.1.2 Comando de atribuição em algoritmos
+        = {atribuicao} posicao_de_memoria operador_atribuicao expressao
+        {-> New comando.atribuicao(posicao_de_memoria, expressao)}
+
+        // 3.1.3 Comando de entrada em algoritmos
+        | {entrada} palavra_reservada_leia lista_de_posicoes_de_memoria
+        {-> New comando.entrada([lista_de_posicoes_de_memoria.posicao_de_memoria])}
+
+        // 3.1.4 Comando de saída em algoritmos
+        | {saida} palavra_reservada_escreva lista_de_expressoes
+        {-> New comando.saida([lista_de_expressoes.expressao])}
+
+        // 4.1.1 Estrutura condicional simples
+        | {bloco} palavra_reservada_inicio comando* palavra_reservada_fim
+        {-> New comando.bloco([comando])}
+
+        // 4.1.2 Estrutura condicional composta
+        | {condicional_composta} palavra_reservada_se expressao palavra_reservada_entao [entao]:comando_fechado palavra_reservada_senao [senao]:comando_fechado
+        {-> New comando.condicional(expressao, entao.comando, senao.comando)}
+
+        // 5.1.1 Estrutura de repetição para número definido de repetições (estrutura para)
+        | {repeticao_para} palavra_reservada_para variavel operador_atribuicao [inicio]:expressao palavra_reservada_ate [fim]:expressao palavra_reservada_faca comando_fechado
+        {-> New comando.repeticao_para(variavel, inicio, fim, Null, comando_fechado.comando)}
+
+        | {repeticao_para_com_passo} palavra_reservada_para variavel operador_atribuicao [inicio]:expressao palavra_reservada_ate [fim]:expressao palavra_reservada_faca palavra_reservada_passo [passo]:numero_inteiro comando_fechado
+        {-> New comando.repeticao_para(variavel, inicio, fim, passo, comando_fechado.comando)}
+
+        // 5.1.2 Estrutura de repetição para número indefinido de repetições e teste no início (estrutura enquanto)
+        | {repeticao_enquanto} palavra_reservada_enquanto expressao palavra_reservada_faca comando_fechado
+        {-> New comando.repeticao_enquanto(expressao, comando_fechado.comando)}
+
+        // 5.1.3 Estrutura de repetição para número indefinido de repetições e teste no final (estrutura repita)
+        | {repeticao_repita} palavra_reservada_repita comando* palavra_reservada_ate expressao
+        {-> New comando.repeticao_repita([comando], expressao)}
+
+        // 8.1 Sub-rotinas (programação modularizada)
+        | {chamada_a_sub_rotina} chamada_a_sub_rotina
+        {-> New comando.chamada_a_sub_rotina(chamada_a_sub_rotina)}
+
+        | {retorne} palavra_reservada_retorne expressao
+        {-> New comando.retorne(expressao)}
+        ;
+
+    posicao_de_memoria
+    {-> posicao_de_memoria}
+
+        = {variavel} variavel
+        {-> New posicao_de_memoria.variavel(variavel)}
+
+        // 10.2.1 Acesso aos campos de um registro em algoritmo
+        | {campo} [registro]:variavel ponto [campo]:variavel
+        {-> New posicao_de_memoria.campo(registro, campo)}
+        ;
+
+    // Gramática de expressões
+    // Precedência das operações baseada na precedência adotada na linguagem C
+    // Referência: https://msdn.microsoft.com/en-us/library/2bxt6kc4.aspx
+    expressao
+    {-> expressao}
+
+        = expressao_a
+        {-> expressao_a.expressao}
+        ;
+
+    expressao_a
+    {-> expressao}
+
+        = {disjuncao} expressao_a operador_ou expressao_b
+        {-> New expressao.disjuncao(expressao_a.expressao, expressao_b.expressao)}
+
+        | {outra} expressao_b
+        {-> expressao_b.expressao}
+        ;
+
+    expressao_b
+    {-> expressao}
+
+        = {conjuncao} expressao_b operador_e expressao_c
+        {-> New expressao.conjuncao(expressao_b.expressao, expressao_c.expressao)}
+
+        | {outra} expressao_c
+        {-> expressao_c.expressao}
+        ;
+
+    expressao_c
+    {-> expressao}
+
+        = {igualdade} expressao_c operador_igual expressao_d
+        {-> New expressao.igualdade(expressao_c.expressao, expressao_d.expressao)}
+
+        | {diferenca} expressao_c operador_diferente expressao_d
+        {-> New expressao.diferenca(expressao_c.expressao, expressao_d.expressao)}
+
+        | {outra} expressao_d
+        {-> expressao_d.expressao}
+        ;
+
+    expressao_d
+    {-> expressao}
+
+        = {menor} expressao_d operador_menor expressao_e
+        {-> New expressao.menor(expressao_d.expressao, expressao_e.expressao)}
+
+        | {menor_ou_igual} expressao_d operador_menor_ou_igual expressao_e
+        {-> New expressao.menor_ou_igual(expressao_d.expressao, expressao_e.expressao)}
+
+        | {maior} expressao_d operador_maior expressao_e
+        {-> New expressao.maior(expressao_d.expressao, expressao_e.expressao)}
+
+        | {maior_ou_igual} expressao_d operador_maior_ou_igual expressao_e
+        {-> New expressao.maior_ou_igual(expressao_d.expressao, expressao_e.expressao)}
+
+        | {outra} expressao_e
+        {-> expressao_e.expressao}
+        ;
+
+    expressao_e
+    {-> expressao}
+
+        = {soma} expressao_e operador_mais expressao_f
+        {-> New expressao.soma(expressao_e.expressao, expressao_f.expressao)}
+
+        | {subtracao} expressao_e operador_menos expressao_f
+        {-> New expressao.subtracao(expressao_e.expressao, expressao_f.expressao)}
+
+        | {outra} expressao_f
+        {-> expressao_f.expressao}
+        ;
+
+    expressao_f
+    {-> expressao}
+        = {multiplicacao} expressao_f operador_vezes expressao_g
+        {-> New expressao.multiplicacao(expressao_f.expressao, expressao_g.expressao)}
+
+        | {divisao} expressao_f operador_dividido_por expressao_g
+        {-> New expressao.divisao(expressao_f.expressao, expressao_g.expressao)}
+
+        | {outra} expressao_g
+        {-> expressao_g.expressao}
+        ;
+
+    expressao_g
+    {-> expressao}
+
+        = {positivo} operador_mais expressao_g
+        {-> New expressao.positivo(expressao_g.expressao)}
+
+        | {negativo} operador_menos expressao_g
+        {-> New expressao.negativo(expressao_g.expressao)}
+
+        | {negacao} operador_nao expressao_g
+        {-> New expressao.negacao(expressao_g.expressao)}
+
+        | {outra} expressao_h
+        {-> expressao_h.expressao}
+        ;
+
+    expressao_h
+    {-> expressao}
+
+        = {chamada_a_sub_rotina} chamada_a_sub_rotina
+        {-> New expressao.chamada_a_sub_rotina(chamada_a_sub_rotina)}
+
+        | {expressao} abre_parentese expressao fecha_parentese
+        {-> expressao}
+
+        | {posicao_de_memoria} posicao_de_memoria
+        {-> New expressao.posicao_de_memoria(posicao_de_memoria)}
+
+        | {valor} valor
+        {-> New expressao.valor(valor)}
+        ;
+
+    chamada_a_sub_rotina
+    {-> chamada_a_sub_rotina}
+
+        = identificador abre_parentese lista_de_expressoes? fecha_parentese
+        {-> New chamada_a_sub_rotina(identificador, [lista_de_expressoes.expressao])}
+        ;
+
+    lista_de_expressoes
+    {-> expressao*}
+
+        = expressao continuacao_da_lista_de_expressoes*
+        {-> [expressao, continuacao_da_lista_de_expressoes.expressao]}
+        ;
+
+    continuacao_da_lista_de_expressoes
+    {-> expressao}
+
+        = virgula expressao
+        {-> expressao}
+        ;
+
+    // 1.6 Tipos de dados
+    valor
+    {-> valor}
+
+        // 1.6.1 Numérico
+        = {inteiro} numero_inteiro
+        {-> New valor.inteiro(numero_inteiro)}
+
+        | {real}    numero_real
+        {-> New valor.real(numero_real)}
+
+        // 1.6.2 Lógico
+        | {logico}  valor_logico
+        {-> New valor.logico(valor_logico)}
+
+        // 1.6.3 Literal ou caractere
+        | {literal} cadeia_de_caracteres
+        {-> New valor.literal(cadeia_de_caracteres)}
+        ;
+
+    lista_de_posicoes_de_memoria
+    {-> posicao_de_memoria*}
+
+        = posicao_de_memoria continuacao_da_lista_de_posicoes_de_memoria*
+        {-> [posicao_de_memoria, continuacao_da_lista_de_posicoes_de_memoria.posicao_de_memoria]}
+        ;
+
+    continuacao_da_lista_de_posicoes_de_memoria
+    {-> posicao_de_memoria}
+
+        = virgula posicao_de_memoria
+        {-> posicao_de_memoria}
+        ;
+
+    // 8.1 Sub-rotinas (programação modularizada)
+    sub_rotina
+    {-> sub_rotina}
+
+        = palavra_reservada_sub_rotina identificador abre_parentese declaracao* fecha_parentese lista_de_declaracoes? comando* palavra_reservada_fim_sub_rotina [identificador_repetido]:identificador
+        {-> New sub_rotina(identificador, [declaracao], [lista_de_declaracoes.declaracao], [comando], identificador_repetido)}
+        ;
+
+Abstract Syntax Tree
+    algoritmo
+        = declaracao* comando* sub_rotina*
+        ;
+
+    declaracao
+        = variavel+ tipo
+        ;
+
+    variavel
+        = {simples}            identificador
+        | {vetor_ou_matriz}    identificador expressao+
+        ;
+
+    tipo
+        = {numerico}
+        | {literal}
+        | {logico}
+        | {registro}    declaracao+
+        ;
+
+    comando
+        = {atribuicao}              posicao_de_memoria expressao
+        | {entrada}                 posicao_de_memoria+
+        | {saida}                   expressao*
+        | {bloco}                   comando*
+        | {condicional}             expressao [entao]:comando [senao]:comando?
+        | {repeticao_para}          variavel [inicio]:expressao [fim]:expressao [passo]:numero_inteiro? comando
+        | {repeticao_enquanto}      expressao comando
+        | {repeticao_repita}        comando* expressao
+        | {chamada_a_sub_rotina}    chamada_a_sub_rotina
+        | {retorne}                 expressao
+        ;
+
+    posicao_de_memoria
+        = {variavel}    variavel
+        | {campo}       [registro]:variavel [campo]:variavel
+        ;
+
+    expressao
+        = {disjuncao}               [esquerda]:expressao [direita]:expressao
+        | {conjuncao}               [esquerda]:expressao [direita]:expressao
+        | {igualdade}               [esquerda]:expressao [direita]:expressao
+        | {diferenca}               [esquerda]:expressao [direita]:expressao
+        | {menor}                   [esquerda]:expressao [direita]:expressao
+        | {menor_ou_igual}          [esquerda]:expressao [direita]:expressao
+        | {maior}                   [esquerda]:expressao [direita]:expressao
+        | {maior_ou_igual}          [esquerda]:expressao [direita]:expressao
+        | {soma}                    [esquerda]:expressao [direita]:expressao
+        | {subtracao}               [esquerda]:expressao [direita]:expressao
+        | {multiplicacao}           [esquerda]:expressao [direita]:expressao
+        | {divisao}                 [esquerda]:expressao [direita]:expressao
+        | {positivo}                expressao
+        | {negativo}                expressao
+        | {negacao}                 expressao
+        | {posicao_de_memoria}      posicao_de_memoria
+        | {chamada_a_sub_rotina}    chamada_a_sub_rotina
+        | {valor}                   valor
+        ;
+
+    chamada_a_sub_rotina
+        = identificador expressao*
+        ;
+
+    valor
+        = {inteiro}    numero_inteiro
+        | {real}       numero_real
+        | {logico}     valor_logico
+        | {literal}    cadeia_de_caracteres
+        ;
+
+    sub_rotina
+        = identificador [parametros]:declaracao* [variaveis_locais]:declaracao* comando* [identificador_repetido]:identificador
+        ;

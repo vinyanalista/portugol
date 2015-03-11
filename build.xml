@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Cria um JAR executável do Portugol Online">
+	<target name="create_run_jar">
+		<jar destfile="portugol.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Application-Name" value="Portugol Online" />
+				<attribute name="Main-Class" value="br.com.vinyanalista.portugol.ide.Aplicativo" />
+				<attribute name="Permissions" value="sandbox" />
+			</manifest>
+			<fileset dir="bin">
+				<exclude name="portugol*" />
+			</fileset>
+			<zipfileset src="lib/autocomplete.jar">
+				<exclude name="gradle/" />
+				<exclude name="org/fife/ui/autocomplete/AutoCompleteDescWindow*.properties" />
+				<exclude name="src/" />
+				<exclude name="META-INF/*.SF" />
+				<exclude name="build.gradle" />
+				<exclude name="gradle*" />
+				<exclude name="README.md" />
+			</zipfileset>
+			<zipfileset src="lib/autocomplete.jar">
+				<include name="org/fife/ui/autocomplete/AutoCompleteDescWindow_pt_BR.properties" />
+			</zipfileset>
+			<zipfileset src="lib/rsyntaxtextarea.jar">
+				<exclude name="org/fife/ui/rsyntaxtextarea/modes/*TokenMaker.class" />
+				<exclude name="org/fife/ui/rsyntaxtextarea/RSyntaxTextArea*.properties" />
+				<exclude name="org/fife/ui/rtextarea/RTextArea*.properties" />
+				<exclude name="META-INF/*.SF" />
+				<exclude name="theme.dtd" />
+			</zipfileset>
+			<zipfileset src="lib/rsyntaxtextarea.jar">
+				<include name="org/fife/ui/rsyntaxtextarea/RSyntaxTextArea_pt_BR.properties" />
+				<include name="org/fife/ui/rtextarea/RTextArea_pt_BR.properties" />
+				<include name="org/fife/ui/rsyntaxtextarea/modes/AbstractTokenMaker.class" />
+				<include name="org/fife/ui/rsyntaxtextarea/modes/PlainTextTokenMaker.class" />
+			</zipfileset>
+			<exclude name="**/.classpath" />
+			<exclude name="**/.gitignore" />
+			<exclude name="**/.gitkeep" />
+			<exclude name="**/.project" />
+		</jar>
+		<!-- Antes, executar: $ keytool -genkey -alias portugol -->
+		<signjar alias="portugol" jar="portugol.jar" signedjar="portugol.jar" storepass="123456" />
+	</target>
+</project>

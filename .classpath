@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="sablecc"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="lib/sablecc.jar"/>
+	<classpathentry kind="lib" path="lib/rsyntaxtextarea.jar" sourcepath="/RSyntaxTextArea"/>
+	<classpathentry kind="lib" path="lib/autocomplete.jar" sourcepath="/AutoComplete"/>
+	<classpathentry kind="var" path="JAVA_HOME/jre/lib/javaws.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
