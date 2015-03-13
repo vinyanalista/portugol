@@ -10,6 +10,9 @@ import br.com.vinyanalista.portugol.interpretador.subrotina.SubrotinaPreDefinida
 import br.com.vinyanalista.portugol.interpretador.tipo.*;
 
 public class AvaliadorDeExpressoes extends DepthFirstAdapter {
+	public static boolean ehNumero(Object objeto) {
+		return Number.class.isAssignableFrom(objeto.getClass());
+	}
 
 	private final Executor executor;
 
@@ -217,7 +220,24 @@ public class AvaliadorDeExpressoes extends DepthFirstAdapter {
         Object valorDaEsquerda = atributosDaEsquerda.obter(Atributo.VALOR);
         Object valorDaDireita = atributosDaDireita.obter(Atributo.VALOR);
         // Determina o valor da expressão
-        Boolean valorDaExpressao = valorDaEsquerda.equals(valorDaDireita);
+        Boolean valorDaExpressao;
+        if (ehNumero(valorDaEsquerda) && ehNumero(valorDaDireita)) {
+			// Se ambos os operandos são números, o operador aritmético é preferido
+        	if ((valorDaEsquerda instanceof Integer) && (valorDaDireita instanceof Integer)) {
+    			// Se ambos os operandos são inteiros, é realizada aritmética de inteiros
+    			int valorDaEsquerdaComoInteiro = (Integer) valorDaEsquerda;
+            	int valorDaDireitaComoInteiro = (Integer) valorDaDireita;
+            	valorDaExpressao = (valorDaEsquerdaComoInteiro == valorDaDireitaComoInteiro);
+    		} else {
+    			// Se um dos operandos não é inteiro, é realizada aritmética de ponto flutuante
+            	double valorDaEsquerdaComoReal = Executor.converterParaReal((Number) valorDaEsquerda);
+            	double valorDaDireitaComoReal = Executor.converterParaReal((Number) valorDaDireita);
+            	valorDaExpressao = (valorDaEsquerdaComoReal == valorDaDireitaComoReal);
+    		}
+		} else {
+			// Se um dos operandos não é número, o método equals() é preferido
+			valorDaExpressao = valorDaEsquerda.equals(valorDaDireita);
+		}
         // Armazena o valor da expressão
 		atributosDaExpressao.inserir(Atributo.VALOR, valorDaExpressao);
 	}
@@ -256,7 +276,24 @@ public class AvaliadorDeExpressoes extends DepthFirstAdapter {
         Object valorDaEsquerda = atributosDaEsquerda.obter(Atributo.VALOR);
         Object valorDaDireita = atributosDaDireita.obter(Atributo.VALOR);
         // Determina o valor da expressão
-        Boolean valorDaExpressao = !valorDaEsquerda.equals(valorDaDireita);
+        Boolean valorDaExpressao;
+        if (ehNumero(valorDaEsquerda) && ehNumero(valorDaDireita)) {
+			// Se ambos os operandos são números, o operador aritmético é preferido
+        	if ((valorDaEsquerda instanceof Integer) && (valorDaDireita instanceof Integer)) {
+    			// Se ambos os operandos são inteiros, é realizada aritmética de inteiros
+    			int valorDaEsquerdaComoInteiro = (Integer) valorDaEsquerda;
+            	int valorDaDireitaComoInteiro = (Integer) valorDaDireita;
+            	valorDaExpressao = (valorDaEsquerdaComoInteiro != valorDaDireitaComoInteiro);
+    		} else {
+    			// Se um dos operandos não é inteiro, é realizada aritmética de ponto flutuante
+            	double valorDaEsquerdaComoReal = Executor.converterParaReal((Number) valorDaEsquerda);
+            	double valorDaDireitaComoReal = Executor.converterParaReal((Number) valorDaDireita);
+            	valorDaExpressao = (valorDaEsquerdaComoReal != valorDaDireitaComoReal);
+    		}
+		} else {
+			// Se um dos operandos não é número, o método equals() é preferido
+			valorDaExpressao = !valorDaEsquerda.equals(valorDaDireita);
+		}
         // Armazena o valor da expressão
 		atributosDaExpressao.inserir(Atributo.VALOR, valorDaExpressao);
 	}
