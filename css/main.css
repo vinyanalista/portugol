@@ -472,7 +472,7 @@ a:focus {
   border-radius: 0 0 0 5px;
 }
 .navbar-default .navbar-brand {
-  background: url(../images/ico/apple-touch-icon-72-precomposed.png) no-repeat scroll 0px 15px transparent !important;
+  background: url(../images/favicons/apple-touch-icon-72x72.png) no-repeat scroll 0px 15px transparent !important;
   background-size: 48px !important;
   height: 78px;
   line-height: 48px;
