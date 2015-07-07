@@ -3,13 +3,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+        redirect users to the https version of the website.
+        but: only check when on the production domain
+    -->
+    <script type="text/javascript">
+        if (("vinyanalista.github.io" == window.location.host) && (window.location.protocol != "https:"))
+            window.location = window.location.toString().replace(/^http:/, "https:");
+    </script>
+
     <meta name="author" content="Antônio Vinícius Menezes Medeiros">
     <meta name="description" content="Ambiente de desenvolvimento integrado que suporta a linguagem Portugol, inspirada no livro Fundamentos da Programação de Computadores">
-    <meta property="og:url" content="http://vinyanalista.github.io/portugol/" />
+    <meta property="og:url" content="https://vinyanalista.github.io/portugol/" />
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="Portugol Online" />
     <meta property="og:description" content="Ambiente de desenvolvimento integrado que suporta a linguagem Portugol, inspirada no livro Fundamentos da Programação de Computadores" />
-    <meta property="og:image" content="http://vinyanalista.github.io/portugol/images/screenshots/applet.jpg" />
+    <meta property="og:image" content="https://vinyanalista.github.io/portugol/images/screenshots/applet.jpg" />
     <title>Portugol Online</title>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
@@ -112,7 +122,7 @@
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55745c3c669f5f24" async="async"></script>
     <script type="text/javascript">
         var addthis_share = {
-            url: "http://vinyanalista.github.io/portugol/",
+            url: "https://vinyanalista.github.io/portugol/",
             title: "Portugol Online",
             description: "Ambiente de desenvolvimento integrado que suporta a linguagem Portugol, inspirada no livro Fundamentos da Programação de Computadores"
         };
