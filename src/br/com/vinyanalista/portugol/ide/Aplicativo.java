@@ -2,6 +2,7 @@ package br.com.vinyanalista.portugol.ide;
 
 import java.awt.Toolkit;
 import java.awt.event.*;
+import java.util.Locale;
 
 import javax.swing.*;
 
@@ -44,6 +45,8 @@ public class Aplicativo extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		Locale.setDefault(new Locale("pt", "BR"));
+		
 		final Aplicativo aplicativo = new Aplicativo();
 
 		SwingUtilities.invokeLater(new Runnable() {
