@@ -8,6 +8,7 @@
 				<attribute name="Permissions" value="sandbox" />
 			</manifest>
 			<fileset dir="bin">
+				<exclude name=".gitkeep" />
 				<exclude name="portugol*" />
 			</fileset>
 			<zipfileset src="lib/autocomplete.jar">
