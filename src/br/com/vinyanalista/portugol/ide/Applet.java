@@ -1,7 +1,5 @@
 package br.com.vinyanalista.portugol.ide;
 
-import java.util.Locale;
-
 import javax.swing.*;
 
 import br.com.vinyanalista.portugol.auxiliar.Log;
@@ -12,7 +10,6 @@ public class Applet extends JApplet {
 	private final TelaPrincipalMinima telaPrincipalMinima;
 
 	public Applet() {
-		Locale.setDefault(new Locale("pt", "BR"));
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {

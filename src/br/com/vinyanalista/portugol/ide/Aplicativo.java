@@ -45,7 +45,9 @@ public class Aplicativo extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		Locale.setDefault(new Locale("pt", "BR"));
+		if (!TelaPrincipalCompletaJavaWebStart.executandoViaJavaWebStart()) {
+			Locale.setDefault(new Locale("pt", "BR"));
+		}
 		
 		final Aplicativo aplicativo = new Aplicativo();
 
